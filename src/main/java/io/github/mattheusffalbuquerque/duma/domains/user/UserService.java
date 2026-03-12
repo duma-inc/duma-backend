@@ -1,0 +1,50 @@
+package io.github.mattheusffalbuquerque.duma.domains.user;
+
+import java.util.List;
+import org.springframework.stereotype.Service;
+import io.github.mattheusffalbuquerque.duma.domains.user.dto.UpdateUserRequest;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    
+    private final UserRepository userRepository;
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+     public User getUserById(String id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    }
+
+     public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public User updateUser(String id, UpdateUserRequest request) {
+
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        if (request.name() != null) {
+            existingUser.setName(request.name());
+        }
+        if (request.email() != null) {
+            existingUser.setEmail(request.email());
+        }
+        if (request.phone() != null) {
+            existingUser.setPhone(request.phone());
+        }
+        if (request.birthDate() != null) {
+            existingUser.setBirthDate(request.birthDate());
+        }
+
+        return userRepository.save(existingUser);
+    }
+
+     public void deleteUser(String id) {
+        userRepository.deleteById(id);
+    }
+}
