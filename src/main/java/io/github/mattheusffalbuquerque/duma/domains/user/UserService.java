@@ -2,8 +2,10 @@ package io.github.mattheusffalbuquerque.duma.domains.user;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import io.github.mattheusffalbuquerque.duma.domains.user.dto.UpdateUserRequest;
 
+import io.github.mattheusffalbuquerque.duma.domains.user.dto.CreateUserRequest;
+import io.github.mattheusffalbuquerque.duma.domains.user.dto.UpdateUserRequest;
+import io.github.mattheusffalbuquerque.duma.domains.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,8 +22,26 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
     }
 
-     public User createUser(User user) {
-        return userRepository.save(user);
+     public UserResponse createUser(CreateUserRequest request) {
+        
+        User newUser = User.builder()
+            .name(request.name())
+            .email(request.email())
+            .password(request.password())
+            .phone(request.phone())
+            .birthDate(request.birthDate())
+            .build();
+
+        User savedUser = userRepository.save(newUser);
+
+        return new UserResponse(
+            savedUser.getId(),
+            savedUser.getName(),
+            savedUser.getEmail(),
+            savedUser.getPhone(),
+            savedUser.getBirthDate(),
+            savedUser.getCreatedAt()
+        );
     }
 
     public User updateUser(String id, UpdateUserRequest request) {
