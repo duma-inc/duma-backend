@@ -13,21 +13,22 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return userMapper.toResponseList(userRepository.findAll());
     }
 
-     public User getUserById(String id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+     public UserResponse getUserById(String id) {
+        return userMapper.toResponse(userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id)));
     }
 
-     public UserResponse createUser(CreateUserRequest request) {
+    public UserResponse createUser(CreateUserRequest request, String keycloakId, String name, String email) {
         
         User newUser = User.builder()
-            .name(request.name())
-            .email(request.email())
-            .password(request.password())
+            .name(name) // associa o nome do Keycloak
+            .email(email) // associa o email do Keycloak
+            .keycloakId(keycloakId) // associa o keycloakId
             .phone(request.phone())
             .birthDate(request.birthDate())
             .build();
@@ -44,16 +45,10 @@ public class UserService {
         );
     }
 
-    public User updateUser(String id, UpdateUserRequest request) {
+    public UserResponse updateUser(String id, UpdateUserRequest request) {
 
         User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
-        if (request.name() != null) {
-            existingUser.setName(request.name());
-        }
-        if (request.email() != null) {
-            existingUser.setEmail(request.email());
-        }
         if (request.phone() != null) {
             existingUser.setPhone(request.phone());
         }
@@ -61,7 +56,7 @@ public class UserService {
             existingUser.setBirthDate(request.birthDate());
         }
 
-        return userRepository.save(existingUser);
+        return userMapper.toResponse(userRepository.save(existingUser));
     }
 
      public void deleteUser(String id) {

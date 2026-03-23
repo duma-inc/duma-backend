@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 import io.github.mattheusffalbuquerque.duma.domains.user.dto.UpdateUserRequest;
 import io.github.mattheusffalbuquerque.duma.domains.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,22 +26,25 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable String id) {
+    public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
-        return ResponseEntity.ok(userService.createUser(request));
+    public ResponseEntity<UserResponse> createUser(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserRequest request) {
+        String keycloakId = jwt.getSubject();
+        String name = jwt.getClaimAsString("name");
+        String email = jwt.getClaimAsString("email");
+        return ResponseEntity.ok(userService.createUser(request, keycloakId, name, email));
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody UpdateUserRequest request) {
+    public ResponseEntity<UserResponse> updateUser(@PathVariable String id, @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
