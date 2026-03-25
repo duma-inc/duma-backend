@@ -12,6 +12,6 @@ public interface TeacherMapper {
 
     Teacher toEntity(CreateTeacherRequest request);
 
-    List<TeacherResponse> toResponse(List<Teacher> teachers);
+    List<TeacherResponse> toResponseList(List<Teacher> teachers);
 
 }

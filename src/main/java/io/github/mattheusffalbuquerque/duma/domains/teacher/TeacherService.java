@@ -13,8 +13,8 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
 
-    public List<TeacherResponse> getAllTeacher() {
-        return teacherMapper.toResponse(teacherRepository.findAll());
+    public List<TeacherResponse> getAllTeachers() {
+        return teacherMapper.toResponseList(teacherRepository.findAll());
     }
 
     public TeacherResponse getTeacherById(String id) {
@@ -25,6 +25,16 @@ public class TeacherService {
      public TeacherResponse getTeacherByUserId(String userId) {
         Teacher teacher = teacherRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("Teacher not found with userId: " + userId));
         return teacherMapper.toResponse(teacher);
+    }
+
+    public TeacherResponse createTeacher(Teacher teacher) {
+        Teacher savedTeacher = teacherRepository.save(teacher);
+        return teacherMapper.toResponse(savedTeacher);
+    }
+
+    public TeacherResponse updateTeacher(Teacher teacher) {
+        Teacher updatedTeacher = teacherRepository.save(teacher);
+        return teacherMapper.toResponse(updatedTeacher);
     }
 
      public void deleteByUserId(String userId) {
