@@ -30,6 +30,7 @@ import io.github.mattheusffalbuquerque.duma.domains.skill.entities.Skill;
 import io.github.mattheusffalbuquerque.duma.domains.stage.Stage;
 import io.github.mattheusffalbuquerque.duma.domains.student.Student;
 import java.util.List;
+import jakarta.persistence.FetchType;
 
 @Entity
 @Getter
@@ -51,15 +52,15 @@ public class Meeting {
     @Column(length = 255)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skill_id", nullable = false)
     private Skill skill;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stage_id", nullable = false)
     private Stage stage;
 
