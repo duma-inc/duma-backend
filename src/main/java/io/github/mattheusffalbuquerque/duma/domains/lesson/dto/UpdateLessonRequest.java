@@ -7,6 +7,8 @@ public record UpdateLessonRequest(
     Integer orderIndex,
     Boolean isActive,
     Long stageId,
-    Long skillId
+    Long skillId,
+    String videoUrl,
+    Integer durationInMinutes
 
 ) {}

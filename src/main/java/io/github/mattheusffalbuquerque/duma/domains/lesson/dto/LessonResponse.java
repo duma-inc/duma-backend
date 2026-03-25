@@ -6,6 +6,8 @@ public record LessonResponse(
     String title,
     String description,
     String stageName,
-    String skillName
-    
-) {} 
+    String skillName,
+    String videoUrl,
+    Integer durationInMinutes
+
+) {}

@@ -63,6 +63,12 @@ public class Lesson {
     @JoinColumn(name = "skill_id", nullable = false)
     private Skill skill;
 
+    @Column
+    private String videoUrl;
+
+    @Column
+    private Integer durationInMinutes;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

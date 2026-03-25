@@ -7,6 +7,8 @@ public record CreateLessonRequest(
     Boolean isActive,
     Long moduleId,
     Long stageId,
-    Long skillId
+    Long skillId,
+    String videoUrl,
+    Integer durationInMinutes
 
 ) {}
