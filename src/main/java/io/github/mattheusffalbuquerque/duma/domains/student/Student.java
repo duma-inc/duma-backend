@@ -1,0 +1,59 @@
+package io.github.mattheusffalbuquerque.duma.domains.student;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.Id;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import io.github.mattheusffalbuquerque.duma.domains.user.User;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "students")
+public class Student {
+
+    @Id
+    private String id;
+    
+    @OneToOne
+    @MapsId
+    private User user;
+
+    @Column(nullable = false)
+    private String bio;
+
+    @Column
+    private String profilePictureUrl;
+
+    @Column
+    private String timezone;
+
+    @Column(nullable = false)
+    private boolean isActive;
+
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+}
