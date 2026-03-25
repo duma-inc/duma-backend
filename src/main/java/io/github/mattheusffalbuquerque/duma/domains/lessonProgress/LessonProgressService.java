@@ -12,6 +12,9 @@ import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.dto.UpdateLes
 import io.github.mattheusffalbuquerque.duma.domains.student.Student;
 import io.github.mattheusffalbuquerque.duma.domains.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.dto.ModuleProgressResponse;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Service
 @RequiredArgsConstructor
@@ -99,4 +102,32 @@ public class LessonProgressService {
         return lessonRepository.findById(lessonId)
             .orElseThrow(() -> new RuntimeException("Lesson not found with id: " + lessonId));
     }
+
+    public ModuleProgressResponse countCompletedLessonsByStudentAndModule(String studentId, String moduleId) {
+    Integer completedLessons = lessonProgressRepository.countCompletedLessonsByStudentAndModule(studentId, moduleId);
+    Integer totalLessons = lessonRepository.countByModuleId(moduleId);
+
+    BigDecimal progressPercent = BigDecimal.ZERO;
+    if (totalLessons != null && totalLessons > 0) {
+        progressPercent = BigDecimal.valueOf(completedLessons)
+            .multiply(BigDecimal.valueOf(100))
+            .divide(BigDecimal.valueOf(totalLessons), 2, RoundingMode.HALF_UP);
+    }
+
+    String status = "NOT_STARTED";
+    if (completedLessons > 0 && completedLessons < totalLessons) {
+        status = "IN_PROGRESS";
+    } else if (totalLessons > 0 && completedLessons.equals(totalLessons)) {
+        status = "COMPLETED";
+    }
+
+    return new ModuleProgressResponse(
+        completedLessons,
+        Long.valueOf(moduleId),
+        totalLessons,
+        progressPercent,
+        status
+    );
+}
+
 }

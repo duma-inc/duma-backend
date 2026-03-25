@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.enums.LessonProgressStatus;
@@ -24,4 +26,13 @@ public interface LessonProgressRepository extends JpaRepository<LessonProgress, 
     Integer countByLessonId(String lessonId);
 
     Integer countByStatus(LessonProgressStatus status);
+    
+    @Query("""
+        SELECT COUNT(lp)
+        FROM LessonProgress lp
+        WHERE lp.student.id = :studentId
+        AND lp.lesson.module.id = :moduleId
+        AND lp.status = LessonProgressStatus.COMPLETED
+    """)
+    Integer countCompletedLessonsByStudentAndModule(@Param("studentId") String studentId, @Param("moduleId") String moduleId);
 }
