@@ -1,4 +1,4 @@
-package io.github.mattheusffalbuquerque.duma.domains.enrollments;
+package io.github.mattheusffalbuquerque.duma.domains.enrollment;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -21,14 +21,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.time.LocalDateTime;
 
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.enums.EnrollmentStatus;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.enums.EnrollmentPace;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.enums.EnrollmentSource;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.enums.EnrollmentStatus;
 import io.github.mattheusffalbuquerque.duma.domains.skill.entities.Skill;
 import io.github.mattheusffalbuquerque.duma.domains.user.User;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import io.github.mattheusffalbuquerque.duma.domains.stage.Stage;
 import jakarta.persistence.UniqueConstraint;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.enums.EnrollmentSource;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.enums.EnrollmentPace;
 
 @Entity
 @Getter

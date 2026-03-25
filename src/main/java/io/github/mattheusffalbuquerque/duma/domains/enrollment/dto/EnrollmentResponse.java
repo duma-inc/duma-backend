@@ -1,4 +1,4 @@
-package io.github.mattheusffalbuquerque.duma.domains.enrollments.dto;
+package io.github.mattheusffalbuquerque.duma.domains.enrollment.dto;
 
 public record EnrollmentResponse(
 

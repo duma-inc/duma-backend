@@ -1,8 +1,10 @@
-package io.github.mattheusffalbuquerque.duma.domains.enrollments;
+package io.github.mattheusffalbuquerque.duma.domains.enrollment;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.dto.EnrollmentResponse;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.dto.CreateEnrollmentRequest;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.dto.EnrollmentResponse;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.dto.UpdateEnrollmentRequest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.dto.CreateEnrollmentRequest;
 import org.springframework.web.bind.annotation.PutMapping;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.dto.UpdateEnrollmentRequest;
 
 
 @RestController

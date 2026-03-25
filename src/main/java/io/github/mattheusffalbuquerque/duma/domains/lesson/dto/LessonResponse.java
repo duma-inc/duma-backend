@@ -1,4 +1,4 @@
-package io.github.mattheusffalbuquerque.duma.domains.lessons.dto;
+package io.github.mattheusffalbuquerque.duma.domains.lesson.dto;
 
 public record LessonResponse(
     

@@ -1,11 +1,13 @@
-package io.github.mattheusffalbuquerque.duma.domains.enrollments;
+package io.github.mattheusffalbuquerque.duma.domains.enrollment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.enums.EnrollmentPace;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.enums.EnrollmentSource;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.enums.EnrollmentStatus;
+
 import java.util.List;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.enums.EnrollmentPace;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.enums.EnrollmentSource;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.enums.EnrollmentStatus;
 
 @Repository
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {

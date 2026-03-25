@@ -1,8 +1,9 @@
-package io.github.mattheusffalbuquerque.duma.domains.enrollments;
+package io.github.mattheusffalbuquerque.duma.domains.enrollment;
 
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.dto.CreateEnrollmentRequest;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.dto.EnrollmentResponse;
 import java.util.List;
+
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.dto.CreateEnrollmentRequest;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.dto.EnrollmentResponse;
 
 public interface EnrollmentMapper {
 

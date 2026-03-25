@@ -1,4 +1,4 @@
-package io.github.mattheusffalbuquerque.duma.domains.lessons;
+package io.github.mattheusffalbuquerque.duma.domains.lesson;
 
 
 import jakarta.persistence.Column;

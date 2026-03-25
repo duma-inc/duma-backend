@@ -1,14 +1,15 @@
-package io.github.mattheusffalbuquerque.duma.domains.enrollments;
+package io.github.mattheusffalbuquerque.duma.domains.enrollment;
 
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.dto.CreateEnrollmentRequest;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.dto.EnrollmentResponse;
 import java.util.List;
-import io.github.mattheusffalbuquerque.duma.domains.enrollments.dto.UpdateEnrollmentRequest;
+
 import io.github.mattheusffalbuquerque.duma.domains.user.UserRepository;
 import org.springframework.stereotype.Service;
 import io.github.mattheusffalbuquerque.duma.domains.skill.repository.SkillRepository;
 import io.github.mattheusffalbuquerque.duma.domains.stage.StageRepository;
 import io.github.mattheusffalbuquerque.duma.domains.user.User;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.dto.CreateEnrollmentRequest;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.dto.EnrollmentResponse;
+import io.github.mattheusffalbuquerque.duma.domains.enrollment.dto.UpdateEnrollmentRequest;
 import io.github.mattheusffalbuquerque.duma.domains.skill.entities.Skill;   
 import io.github.mattheusffalbuquerque.duma.domains.stage.Stage;
 import lombok.RequiredArgsConstructor;

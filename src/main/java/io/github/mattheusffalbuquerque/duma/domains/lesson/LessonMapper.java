@@ -1,10 +1,11 @@
-package io.github.mattheusffalbuquerque.duma.domains.lessons;
+package io.github.mattheusffalbuquerque.duma.domains.lesson;
 
 import java.util.List;
 
 import org.mapstruct.Mapper;
-import io.github.mattheusffalbuquerque.duma.domains.lessons.dto.CreateLessonRequest;
-import io.github.mattheusffalbuquerque.duma.domains.lessons.dto.LessonResponse;
+
+import io.github.mattheusffalbuquerque.duma.domains.lesson.dto.CreateLessonRequest;
+import io.github.mattheusffalbuquerque.duma.domains.lesson.dto.LessonResponse;
 
 @Mapper(componentModel = "spring")
 public interface LessonMapper {
