@@ -18,6 +18,7 @@ import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.dto.UpdateLes
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.dto.ModuleProgressResponse;
+import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.dto.StageProgressResponse;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,12 +47,18 @@ public class LessonProgressController {
         return ResponseEntity.ok(lessonProgressService.getLessonProgressByLessonId(lessonId));
     }
 
-    @GetMapping("/progress")
+    @GetMapping("/moduleprogress")
     public ResponseEntity<ModuleProgressResponse> getProgress(@RequestParam String studentId, @RequestParam String moduleId) {
         ModuleProgressResponse progress = lessonProgressService.countCompletedLessonsByStudentAndModule(studentId, moduleId);
         return ResponseEntity.ok(progress);
     }
-    
+
+    @GetMapping("/stageprogress")
+    public ResponseEntity<StageProgressResponse> getStageProgress(@RequestParam String studentId, @RequestParam String moduleId) {
+        StageProgressResponse progress = lessonProgressService.getModuleProgress(studentId, moduleId);
+        return ResponseEntity.ok(progress);
+    }
+        
 
     @PostMapping
     public ResponseEntity<LessonProgressResponse> createLessonProgress(@RequestBody CreateLessonProgressRequest request) {

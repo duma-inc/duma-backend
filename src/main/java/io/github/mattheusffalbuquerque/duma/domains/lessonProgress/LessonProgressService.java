@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.dto.ModuleProgressResponse;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.dto.StageProgressResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -104,30 +105,41 @@ public class LessonProgressService {
     }
 
     public ModuleProgressResponse countCompletedLessonsByStudentAndModule(String studentId, String moduleId) {
-    Integer completedLessons = lessonProgressRepository.countCompletedLessonsByStudentAndModule(studentId, moduleId);
-    Integer totalLessons = lessonRepository.countByModuleId(moduleId);
+        Integer completedLessons = lessonProgressRepository.countCompletedLessonsByStudentAndModule(studentId, moduleId);
+        Integer totalLessons = lessonRepository.countByModuleId(moduleId);
 
-    BigDecimal progressPercent = BigDecimal.ZERO;
-    if (totalLessons != null && totalLessons > 0) {
-        progressPercent = BigDecimal.valueOf(completedLessons)
-            .multiply(BigDecimal.valueOf(100))
-            .divide(BigDecimal.valueOf(totalLessons), 2, RoundingMode.HALF_UP);
+        BigDecimal progressPercent = BigDecimal.ZERO;
+        if (totalLessons != null && totalLessons > 0) {
+            progressPercent = BigDecimal.valueOf(completedLessons)
+                .multiply(BigDecimal.valueOf(100))
+                .divide(BigDecimal.valueOf(totalLessons), 2, RoundingMode.HALF_UP);
+        }
+
+        String status = "NOT_STARTED";
+        if (completedLessons > 0 && completedLessons < totalLessons) {
+            status = "IN_PROGRESS";
+        } else if (totalLessons > 0 && completedLessons.equals(totalLessons)) {
+            status = "COMPLETED";
+        }
+
+        return new ModuleProgressResponse(
+            completedLessons,
+            Long.valueOf(moduleId),
+            totalLessons,
+            progressPercent,
+            status
+        );
     }
 
-    String status = "NOT_STARTED";
-    if (completedLessons > 0 && completedLessons < totalLessons) {
-        status = "IN_PROGRESS";
-    } else if (totalLessons > 0 && completedLessons.equals(totalLessons)) {
-        status = "COMPLETED";
+    public StageProgressResponse getModuleProgress(String studentId, String moduleId) {
+        ModuleProgressResponse progress = countCompletedLessonsByStudentAndModule(studentId, moduleId);
+        return new StageProgressResponse(
+            progress.completedLessons(),
+            progress.moduleId(),
+            progress.totalLessons(),
+            progress.progressPercent(),
+            progress.status()
+        );
     }
-
-    return new ModuleProgressResponse(
-        completedLessons,
-        Long.valueOf(moduleId),
-        totalLessons,
-        progressPercent,
-        status
-    );
-}
 
 }
