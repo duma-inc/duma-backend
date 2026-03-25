@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,10 @@ import io.github.mattheusffalbuquerque.duma.domains.stage.Stage;
 import jakarta.persistence.FetchType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import jakarta.persistence.EntityListeners;
+import io.github.mattheusffalbuquerque.duma.domains.lesson.Lesson;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +33,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @AllArgsConstructor
 @Builder
 @Table(name = "modules")
+@EntityListeners(AuditingEntityListener.class)
 public class Module {
 
     @Id
@@ -53,6 +59,9 @@ public class Module {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skill_id", nullable = false)
     private Skill skill;
+
+    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY)
+    private List<Lesson> lessons;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
