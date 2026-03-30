@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.mattheusffalbuquerque.duma.domains.user.dto.UpdateUserRequest;
 import io.github.mattheusffalbuquerque.duma.domains.user.dto.UserResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,21 +23,25 @@ import io.github.mattheusffalbuquerque.duma.domains.user.dto.CreateUserRequest;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@Tag(name = "User", description = "Endpoints for managing users")
 public class UserController {
 
     private final UserService userService;
 
     @GetMapping
+    @Operation(summary = "Get all users", description = "Returns a list of all users in the system")
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get user by ID", description = "Returns a single user by their unique ID")
     public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping
+    @Operation(summary = "Create a new user", description = "Creates a new user in the system using information from the authenticated JWT token and the request body")
     public ResponseEntity<UserResponse> createUser(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserRequest request) {
         String keycloakId = jwt.getSubject();
         String name = jwt.getClaimAsString("name");
@@ -44,11 +50,13 @@ public class UserController {
     }
     
     @PutMapping("/{id}")
+    @Operation(summary = "Update user information", description = "Updates the information of an existing user identified by their unique ID")
     public ResponseEntity<UserResponse> updateUser(@PathVariable String id, @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a user", description = "Deletes an existing user from the system identified by their unique ID")
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();

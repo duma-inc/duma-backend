@@ -12,6 +12,8 @@ public interface StudentMapper {
 
     public Student toEntity(CreateStudentRequest student);
 
+    public void toEntity(CreateStudentRequest student, Student existingStudent);
+
     public StudentResponse toResponse(Student student);
 
     public List<StudentResponse> toResponseList(List<Student> students);

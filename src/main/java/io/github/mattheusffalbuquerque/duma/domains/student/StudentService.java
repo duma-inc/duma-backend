@@ -31,6 +31,13 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    public Student updateStudent(String id, CreateStudentRequest request) {
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+        studentMapper.toEntity(request, existingStudent);
+        return studentRepository.save(existingStudent);
+    }
+
     public void deleteByUserId(String userId) {
         studentRepository.deleteByUserId(userId);
     }
