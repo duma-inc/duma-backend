@@ -1,0 +1,13 @@
+CREATE TABLE stages (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    slug VARCHAR(100) NOT NULL UNIQUE,
+    short_description VARCHAR(255) NOT NULL,
+    full_description TEXT,
+    icon_url VARCHAR(255),
+    color VARCHAR(15),
+    order_index INTEGER NOT NULL UNIQUE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

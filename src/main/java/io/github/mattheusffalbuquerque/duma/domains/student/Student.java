@@ -39,7 +39,7 @@ public class Student {
     @MapsId
     private User user;
 
-    @Column(nullable = false)
+    @Column
     private String bio;
 
     @Column
@@ -48,7 +48,7 @@ public class Student {
     @Column
     private String timezone;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean isActive;
 
     @OneToMany(mappedBy = "student")

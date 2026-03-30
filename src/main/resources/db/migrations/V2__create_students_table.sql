@@ -1,0 +1,10 @@
+CREATE TABLE students (
+    id UUID PRIMARY KEY,
+    bio VARCHAR(255) NOT NULL,
+    profile_picture_url VARCHAR(255),
+    timezone VARCHAR(255),
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_students_user FOREIGN KEY (id) REFERENCES users(id)
+);
