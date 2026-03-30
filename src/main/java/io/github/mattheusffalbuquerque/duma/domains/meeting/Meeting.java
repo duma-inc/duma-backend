@@ -9,9 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import io.github.mattheusffalbuquerque.duma.domains.meeting.enums.MeetingStatus;
 import io.github.mattheusffalbuquerque.duma.domains.teacher.Teacher;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -28,7 +27,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import io.github.mattheusffalbuquerque.duma.domains.skill.entities.Skill;
 import io.github.mattheusffalbuquerque.duma.domains.stage.Stage;
-import io.github.mattheusffalbuquerque.duma.domains.student.Student;
+import io.github.mattheusffalbuquerque.duma.domains.attendance.Attendance;
+import jakarta.persistence.CascadeType;
 import java.util.List;
 import jakarta.persistence.FetchType;
 
@@ -64,13 +64,9 @@ public class Meeting {
     @JoinColumn(name = "stage_id", nullable = false)
     private Stage stage;
 
-    @ManyToMany
-    @JoinTable(
-        name = "meeting_students",
-        joinColumns = @JoinColumn(name = "meeting_id"),
-        inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private List<Student> students;
+    @OneToMany
+    (mappedBy = "meeting", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Attendance> attendances;
 
     @Column(nullable = false)
     private LocalDateTime scheduledStart;

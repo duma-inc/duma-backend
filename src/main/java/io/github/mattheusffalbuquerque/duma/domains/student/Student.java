@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import io.github.mattheusffalbuquerque.duma.domains.attendance.Attendance;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -47,6 +50,9 @@ public class Student {
 
     @Column(nullable = false)
     private boolean isActive;
+
+    @OneToMany(mappedBy = "student")
+    private List<Attendance> attendances;
 
     @CreatedDate
     @Column(nullable = false)
