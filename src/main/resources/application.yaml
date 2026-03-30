@@ -34,7 +34,14 @@ spring:
         jwt:
           issuer-uri: http://keycloak:8080/realms/duma
           jwk-set-uri: http://keycloak:8080/realms/duma/protocol/openid-connect/certs
-
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger
+    operations-sorter: alpha
+    tags-sorter: alpha
+    doc-expansion: none
 management:
   endpoints:
     web:
