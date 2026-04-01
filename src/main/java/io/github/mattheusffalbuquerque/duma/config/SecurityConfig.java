@@ -21,7 +21,7 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/actuator/**").permitAll()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/swagger/**", "/swagger-ui/**", "/api-docs/**").permitAll()
                 .anyRequest().authenticated() // ← troque quando implementar JWT
             )
             .oauth2ResourceServer(oauth2 -> oauth2
