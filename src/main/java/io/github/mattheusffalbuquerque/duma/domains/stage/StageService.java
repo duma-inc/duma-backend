@@ -42,7 +42,6 @@ public class StageService {
         Stage savedStage = stageRepository.save(stage);
         
         return new StageResponse(
-            savedStage.getId(),
             savedStage.getName(),
             savedStage.getSlug(),
             savedStage.getShortDescription(),
@@ -76,7 +75,6 @@ public class StageService {
         Stage updatedStage = stageRepository.save(existingStage);
 
         return new StageResponse(
-            updatedStage.getId(),
             updatedStage.getName(),
             updatedStage.getSlug(),
             updatedStage.getShortDescription(),
