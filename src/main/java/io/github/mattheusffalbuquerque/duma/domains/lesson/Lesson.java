@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import io.github.mattheusffalbuquerque.duma.domains.module.Module;
 import io.github.mattheusffalbuquerque.duma.domains.skill.entities.Skill;
 import io.github.mattheusffalbuquerque.duma.domains.stage.Stage;
 import jakarta.persistence.FetchType;
