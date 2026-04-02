@@ -3,10 +3,10 @@ package io.github.mattheusffalbuquerque.duma.domains.exercice;
 import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +23,8 @@ public class Exercise {
     
     @Id
     private String id;
+
+    private String lessonId;
 
     private String name;
 

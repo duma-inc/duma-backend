@@ -6,13 +6,14 @@ import io.github.mattheusffalbuquerque.duma.domains.student.dto.CreateStudentReq
 import io.github.mattheusffalbuquerque.duma.domains.student.dto.StudentResponse;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
 
     public Student toEntity(CreateStudentRequest student);
 
-    public void toEntity(CreateStudentRequest student, Student existingStudent);
+    public void toEntity(CreateStudentRequest student, @MappingTarget Student existingStudent);
 
     public StudentResponse toResponse(Student student);
 

@@ -8,7 +8,7 @@ public record EnrollmentResponse(
     @Schema(description = "The identifier of the record", example = "11")
     Long id,
     @Schema(description = "The identifier of the user", example = "user-123")
-    Long userId,
+    String userId,
     @Schema(description = "The identifier of the skill", example = "skill-123")
     Long skillId,
     @Schema(description = "The identifier of the current stage", example = "stage-123")

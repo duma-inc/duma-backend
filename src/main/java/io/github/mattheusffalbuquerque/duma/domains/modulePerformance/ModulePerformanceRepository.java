@@ -2,6 +2,7 @@ package io.github.mattheusffalbuquerque.duma.domains.modulePerformance;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,13 +10,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ModulePerformanceRepository extends JpaRepository<ModulePerformance, Long> {
 
-    Optional<ModulePerformance> findByStudentIdAndModuleId(String studentId, String moduleId);
+    Optional<ModulePerformance> findByStudentIdAndModuleId(UUID studentId, UUID moduleId);
 
-    List<ModulePerformance> findByStudentId(String studentId);
+    List<ModulePerformance> findByStudentId(UUID studentId);
 
-    List<ModulePerformance> findByModuleId(String moduleId);
+    List<ModulePerformance> findByModuleId(UUID moduleId);
 
-    Integer countByStudentId(String studentId);
+    Integer countByStudentId(UUID studentId);
 
-    Integer countByModuleId(String moduleId);
+    Integer countByModuleId(UUID moduleId);
 }

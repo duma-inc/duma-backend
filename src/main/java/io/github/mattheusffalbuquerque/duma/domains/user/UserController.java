@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import io.github.mattheusffalbuquerque.duma.domains.user.dto.CreateUserRequest;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -36,7 +37,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get user by ID", description = "Returns a single user by their unique ID")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
+    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
@@ -51,13 +52,13 @@ public class UserController {
     
     @PutMapping("/{id}")
     @Operation(summary = "Update user information", description = "Updates the information of an existing user identified by their unique ID")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable String id, @RequestBody UpdateUserRequest request) {
+    public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a user", description = "Deletes an existing user from the system identified by their unique ID")
-    public ResponseEntity<Void> deleteUser(@PathVariable String id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }

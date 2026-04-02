@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.module;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class ModuleService {
         return moduleMapper.toResponseList(moduleRepository.findAll());
     }
 
-    public ModuleResponse getModuleById(String id) {
+    public ModuleResponse getModuleById(UUID id) {
         Module module = moduleRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Module not found with id: " + id));
 
@@ -51,7 +52,7 @@ public class ModuleService {
         return moduleMapper.toResponse(savedModule);
     }
 
-     public ModuleResponse updateModule(String id, UpdateModuleRequest request) {
+     public ModuleResponse updateModule(UUID id, UpdateModuleRequest request) {
         Module existingModule = moduleRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Module not found with id: " + id));
 
@@ -82,7 +83,7 @@ public class ModuleService {
         return moduleMapper.toResponse(updatedModule);
     }
 
-    public void deleteModule(String id) {
+    public void deleteModule(UUID id) {
         Module existingModule = moduleRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Module not found with id: " + id));
 

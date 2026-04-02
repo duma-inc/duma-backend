@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.meeting;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -19,22 +20,22 @@ public class MeetingService {
         return meetingMapper.toResponseList(meetings);
     }
 
-    public List<MeetingResponse> getMeetingByTeacherId(String teacherId) {
+    public List<MeetingResponse> getMeetingByTeacherId(UUID teacherId) {
         List<Meeting> meetings = meetingRepository.findAllByTeacherId(teacherId);
         return meetingMapper.toResponseList(meetings);
     }
 
-    public List<MeetingResponse> getMeetingBySkillId(String skillId) {
+    public List<MeetingResponse> getMeetingBySkillId(Long skillId) {
         List<Meeting> meetings = meetingRepository.findAllBySkillId(skillId);
         return meetingMapper.toResponseList(meetings);
     }
 
-    public List<MeetingResponse> getMeetingByStageId(String stageId) {
+    public List<MeetingResponse> getMeetingByStageId(Long stageId) {
         List<Meeting> meetings = meetingRepository.findAllByStageId(stageId);
         return meetingMapper.toResponseList(meetings);
     }
 
-    public MeetingResponse getMeetingById(String id) {
+    public MeetingResponse getMeetingById(UUID id) {
         Meeting meeting = meetingRepository.findById(id).orElse(null);
         return meetingMapper.toResponse(meeting);
     }
@@ -50,19 +51,19 @@ public class MeetingService {
         return meetingMapper.toResponse(updatedMeeting);
     }
 
-    public Integer countMeetingsByTeacherId(String teacherId) {
+    public Integer countMeetingsByTeacherId(UUID teacherId) {
         return meetingRepository.countByTeacherId(teacherId);
     }
 
-    public Integer countMeetingsBySkillId(String skillId) {
+    public Integer countMeetingsBySkillId(Long skillId) {
         return meetingRepository.countBySkillId(skillId);
     }
 
-    public Integer countMeetingsByStageId(String stageId) {
+    public Integer countMeetingsByStageId(Long stageId) {
         return meetingRepository.countByStageId(stageId);
     }
 
-    public void deleteMeeting(String id) {
+    public void deleteMeeting(UUID id) {
         meetingRepository.deleteById(id);
     }
     

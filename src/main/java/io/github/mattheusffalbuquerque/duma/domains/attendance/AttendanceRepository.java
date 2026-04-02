@@ -2,6 +2,7 @@ package io.github.mattheusffalbuquerque.duma.domains.attendance;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,15 +10,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
-    Optional<Attendance> findByStudentIdAndMeetingId(String studentId, String meetingId);
+    Optional<Attendance> findByStudentIdAndMeetingId(UUID studentId, UUID meetingId);
 
-    List<Attendance> findByStudentId(String studentId);
+    List<Attendance> findByStudentId(UUID studentId);
 
-    List<Attendance> findByMeetingId(String meetingId);
+    List<Attendance> findByMeetingId(UUID meetingId);
 
     List<Attendance> findByStatus(Boolean status);
 
-    Integer countByStudentId(String studentId);
+    Integer countByStudentId(UUID studentId);
 
-    Integer countByMeetingId(String meetingId);
+    Integer countByMeetingId(UUID meetingId);
 }

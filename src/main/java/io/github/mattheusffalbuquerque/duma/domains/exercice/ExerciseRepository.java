@@ -15,9 +15,7 @@ public interface ExerciseRepository extends MongoRepository<Exercise, String> {
 
     List<Exercise> findByType(ExerciseType type);
 
-    List<ExerciseOptions> findOptionsByExerciseId(String exerciseId);
-
-    List<Exercise> findByLessonAndType(String lessonId, ExerciseType type);
+    List<Exercise> findByLessonIdAndType(String lessonId, ExerciseType type);
 
     Integer countByLessonId(String lessonId);
 

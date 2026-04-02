@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import io.github.mattheusffalbuquerque.duma.domains.module.dto.UpdateModuleRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 
@@ -37,7 +38,7 @@ public class ModuleController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get module by ID", description = "Returns a single module by its unique ID")
-    public ResponseEntity<ModuleResponse> getModuleById(@PathVariable String id) {
+    public ResponseEntity<ModuleResponse> getModuleById(@PathVariable UUID id) {
         return ResponseEntity.ok(moduleService.getModuleById(id));
     }
 
@@ -49,13 +50,13 @@ public class ModuleController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update module information", description = "Updates the information of an existing module identified by its unique ID")
-    public ResponseEntity<ModuleResponse> updateModule(@PathVariable String id, @RequestBody UpdateModuleRequest moduleRequest) {
+    public ResponseEntity<ModuleResponse> updateModule(@PathVariable UUID id, @RequestBody UpdateModuleRequest moduleRequest) {
         return ResponseEntity.ok(moduleService.updateModule(id, moduleRequest));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a module", description = "Deletes an existing module from the system identified by its unique ID")
-    public ResponseEntity<Void> deleteModule(@PathVariable String id) {
+    public ResponseEntity<Void> deleteModule(@PathVariable UUID id) {
         moduleService.deleteModule(id);
         return ResponseEntity.noContent().build();
     }

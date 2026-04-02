@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.attempt;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,7 +30,7 @@ public interface AttemptMapper {
         }
 
         Student student = new Student();
-        student.setId(studentId);
+        student.setId(UUID.fromString(studentId));
         return student;
     }
 
@@ -39,7 +40,7 @@ public interface AttemptMapper {
         }
 
         Lesson lesson = new Lesson();
-        lesson.setId(lessonId);
+        lesson.setId(UUID.fromString(lessonId));
         return lesson;
     }
 }

@@ -17,6 +17,7 @@ import lombok.Setter;
 import io.github.mattheusffalbuquerque.duma.domains.user.User;
 import jakarta.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -28,7 +29,7 @@ import java.time.LocalDateTime;
 public class Teacher {
     
     @Id
-    private String id;
+    private UUID id;
 
     @OneToOne
     @MapsId

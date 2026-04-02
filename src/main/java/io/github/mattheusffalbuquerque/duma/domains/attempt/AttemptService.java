@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.attempt;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -36,11 +37,11 @@ public class AttemptService {
     }
 
     public List<AttemptResponse> getAttemptsByStudentId(String studentId) {
-        return attemptMapper.toResponseList(attemptRepository.findByStudentId(studentId));
+        return attemptMapper.toResponseList(attemptRepository.findByStudentId(parseUuid(studentId)));
     }
 
     public List<AttemptResponse> getAttemptsByLessonId(String lessonId) {
-        return attemptMapper.toResponseList(attemptRepository.findByLessonId(lessonId));
+        return attemptMapper.toResponseList(attemptRepository.findByLessonId(parseUuid(lessonId)));
     }
 
     public List<AttemptResponse> getAttemptsByExerciseId(String exerciseId) {
@@ -48,7 +49,7 @@ public class AttemptService {
     }
 
     public List<AttemptResponse> getAttemptsByStudentIdAndLessonId(String studentId, String lessonId) {
-        return attemptMapper.toResponseList(attemptRepository.findByStudentIdAndLessonId(studentId, lessonId));
+        return attemptMapper.toResponseList(attemptRepository.findByStudentIdAndLessonId(parseUuid(studentId), parseUuid(lessonId)));
     }
 
     public AttemptResponse createAttempt(CreateAttemptRequest request) {
@@ -100,12 +101,12 @@ public class AttemptService {
     }
 
     private Student getStudentById(String studentId) {
-        return studentRepository.findById(studentId)
+        return studentRepository.findById(parseUuid(studentId))
             .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
     }
 
     private Lesson getLessonById(String lessonId) {
-        return lessonRepository.findById(lessonId)
+        return lessonRepository.findById(parseUuid(lessonId))
             .orElseThrow(() -> new RuntimeException("Lesson not found with id: " + lessonId));
     }
 
@@ -113,5 +114,9 @@ public class AttemptService {
         if (!exerciseRepository.existsById(exerciseId)) {
             throw new RuntimeException("Exercise not found with id: " + exerciseId);
         }
+    }
+
+    private UUID parseUuid(String id) {
+        return UUID.fromString(id);
     }
 }

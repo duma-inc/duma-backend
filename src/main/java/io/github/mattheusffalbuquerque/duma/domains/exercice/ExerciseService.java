@@ -48,8 +48,9 @@ public class ExerciseService {
     }
 
     public List<ExerciseOptionsResponse> getOptionsByExercise(String exerciseId) {
-        List<ExerciseOptions> options = exerciseRepository.findOptionsByExerciseId(exerciseId);
-        return exerciseMapper.toResponse(options);
+        Exercise exercise = exerciseRepository.findById(exerciseId)
+            .orElseThrow(() -> new RuntimeException("Exercise not found"));
+        return exerciseMapper.toResponse(exercise.getOptions());
     }
 
     public List<ExerciseOptionsResponse> updateOptions(String exerciseId, List<ExerciseOptionsResponse> options) {

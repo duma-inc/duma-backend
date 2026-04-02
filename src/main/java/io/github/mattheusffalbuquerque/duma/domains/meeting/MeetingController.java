@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.UUID;
 
 
 
@@ -40,19 +41,19 @@ public class MeetingController {
     
     @GetMapping("/{id}")
     @Operation(summary = "Get meeting by ID", description = "Returns a single meeting by its unique ID")
-    public MeetingResponse getMeetingById(@PathVariable String id) {
+    public MeetingResponse getMeetingById(@PathVariable UUID id) {
         return meetingService.getMeetingById(id);
     }
 
     @GetMapping("/teacherId")
     @Operation(summary = "Get meetings by teacher ID", description = "Returns a list of meetings associated with a specific teacher")
-    public List<MeetingResponse> getAllByTeacherId(@RequestParam String id) {
+    public List<MeetingResponse> getAllByTeacherId(@RequestParam UUID id) {
         return meetingService.getMeetingByTeacherId(id);
     }
 
     @GetMapping("/skillId")
     @Operation(summary = "Get meetings by skill ID", description = "Returns a list of meetings associated with a specific skill")
-    public List<MeetingResponse> getAllBySkillId(@RequestParam String id) {
+    public List<MeetingResponse> getAllBySkillId(@RequestParam Long id) {
         return meetingService.getMeetingBySkillId(id);
     }
     
@@ -65,7 +66,7 @@ public class MeetingController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update meeting information", description = "Updates the information of an existing meeting identified by its unique ID")
-    public MeetingResponse updateMeeting(@PathVariable String id, @RequestBody CreateMeetingRequest request) {
+    public MeetingResponse updateMeeting(@PathVariable UUID id, @RequestBody CreateMeetingRequest request) {
         Meeting meeting = meetingMapper.toEntity(request);
         meeting.setId(id);
         return meetingService.updateMeeting(meeting);
@@ -73,7 +74,7 @@ public class MeetingController {
     
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a meeting", description = "Deletes an existing meeting from the system identified by its unique ID")
-    public void deleteMeeting(@PathVariable String id) {
+    public void deleteMeeting(@PathVariable UUID id) {
         meetingService.deleteMeeting(id);
     }
     

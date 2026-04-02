@@ -2,6 +2,7 @@ package io.github.mattheusffalbuquerque.duma.domains.lessonProgress;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,17 +14,17 @@ import io.github.mattheusffalbuquerque.duma.domains.lessonProgress.enums.LessonP
 @Repository
 public interface LessonProgressRepository extends JpaRepository<LessonProgress, Long> {
 
-    Optional<LessonProgress> findByStudentIdAndLessonId(String studentId, String lessonId);
+    Optional<LessonProgress> findByStudentIdAndLessonId(UUID studentId, UUID lessonId);
 
-    List<LessonProgress> findByStudentId(String studentId);
+    List<LessonProgress> findByStudentId(UUID studentId);
 
-    List<LessonProgress> findByLessonId(String lessonId);
+    List<LessonProgress> findByLessonId(UUID lessonId);
 
     List<LessonProgress> findByStatus(LessonProgressStatus status);
 
-    Integer countByStudentId(String studentId);
+    Integer countByStudentId(UUID studentId);
 
-    Integer countByLessonId(String lessonId);
+    Integer countByLessonId(UUID lessonId);
 
     Integer countByStatus(LessonProgressStatus status);
     
@@ -34,5 +35,5 @@ public interface LessonProgressRepository extends JpaRepository<LessonProgress, 
         AND lp.lesson.module.id = :moduleId
         AND lp.status = LessonProgressStatus.COMPLETED
     """)
-    Integer countCompletedLessonsByStudentAndModule(@Param("studentId") String studentId, @Param("moduleId") String moduleId);
+    Integer countCompletedLessonsByStudentAndModule(@Param("studentId") UUID studentId, @Param("moduleId") UUID moduleId);
 }

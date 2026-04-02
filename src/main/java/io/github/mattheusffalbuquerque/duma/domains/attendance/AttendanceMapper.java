@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.attendance;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,7 +30,7 @@ public interface AttendanceMapper {
         }
 
         Student student = new Student();
-        student.setId(studentId);
+        student.setId(UUID.fromString(studentId));
         return student;
     }
 
@@ -39,7 +40,7 @@ public interface AttendanceMapper {
         }
 
         Meeting meeting = new Meeting();
-        meeting.setId(meetingId);
+        meeting.setId(UUID.fromString(meetingId));
         return meeting;
     }
 }

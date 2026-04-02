@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.modulePerformance;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -34,11 +35,11 @@ public class ModulePerformanceService {
     }
 
     public List<ModulePerformanceResponse> getModulePerformanceByStudentId(String studentId) {
-        return modulePerformanceMapper.toResponseList(modulePerformanceRepository.findByStudentId(studentId));
+        return modulePerformanceMapper.toResponseList(modulePerformanceRepository.findByStudentId(parseUuid(studentId)));
     }
 
     public List<ModulePerformanceResponse> getModulePerformanceByModuleId(String moduleId) {
-        return modulePerformanceMapper.toResponseList(modulePerformanceRepository.findByModuleId(moduleId));
+        return modulePerformanceMapper.toResponseList(modulePerformanceRepository.findByModuleId(parseUuid(moduleId)));
     }
 
     public ModulePerformanceResponse createModulePerformance(CreateModulePerformanceRequest request) {
@@ -85,12 +86,16 @@ public class ModulePerformanceService {
     }
 
     private Student findStudentById(String studentId) {
-        return studentRepository.findById(studentId)
+        return studentRepository.findById(parseUuid(studentId))
             .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
     }
 
     private Module findModuleById(String moduleId) {
-        return moduleRepository.findById(moduleId)
+        return moduleRepository.findById(parseUuid(moduleId))
             .orElseThrow(() -> new RuntimeException("Module not found with id: " + moduleId));
+    }
+
+    private UUID parseUuid(String id) {
+        return UUID.fromString(id);
     }
 }

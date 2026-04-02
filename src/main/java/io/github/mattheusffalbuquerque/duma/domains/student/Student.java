@@ -15,6 +15,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import io.github.mattheusffalbuquerque.duma.domains.attendance.Attendance;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -33,7 +34,7 @@ import io.github.mattheusffalbuquerque.duma.domains.user.User;
 public class Student {
 
     @Id
-    private String id;
+    private UUID id;
     
     @OneToOne
     @MapsId

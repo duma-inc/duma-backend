@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.enrollment;
 
 import java.util.List;
+import java.util.UUID;
 
 import io.github.mattheusffalbuquerque.duma.domains.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class EnrollmentService {
 
     public EnrollmentResponse createEnrollment(CreateEnrollmentRequest request) {
         
-        User user = userRepository.findById(request.userId())
+        User user = userRepository.findById(UUID.fromString(request.userId()))
             .orElseThrow(() -> new RuntimeException("User not found with id: " + request.userId()));
 
         Skill skill = skillRepository.findById(request.skillId())
@@ -64,7 +65,7 @@ public class EnrollmentService {
 
 
         if (request.userId() != null) {
-            User user = userRepository.findById(request.userId())
+            User user = userRepository.findById(UUID.fromString(request.userId()))
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + request.userId()));
             existingEnrollment.setUser(user);
         }

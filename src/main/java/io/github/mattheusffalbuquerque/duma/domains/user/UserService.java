@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.user;
 
 import java.util.List;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import io.github.mattheusffalbuquerque.duma.domains.user.dto.CreateUserRequest;
@@ -19,7 +20,7 @@ public class UserService {
         return userMapper.toResponseList(userRepository.findAll());
     }
 
-     public UserResponse getUserById(String id) {
+     public UserResponse getUserById(UUID id) {
         return userMapper.toResponse(userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id)));
     }
 
@@ -44,7 +45,7 @@ public class UserService {
         );
     }
 
-    public UserResponse updateUser(String id, UpdateUserRequest request) {
+    public UserResponse updateUser(UUID id, UpdateUserRequest request) {
 
         User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
@@ -58,7 +59,7 @@ public class UserService {
         return userMapper.toResponse(userRepository.save(existingUser));
     }
 
-     public void deleteUser(String id) {
+     public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }
 }

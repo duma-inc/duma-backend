@@ -2,6 +2,7 @@ package io.github.mattheusffalbuquerque.duma.domains.attendance;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -35,15 +36,15 @@ public class AttendanceService {
     }
 
     public List<AttendanceResponse> getAttendancesByStudentId(String studentId) {
-        return attendanceMapper.toResponseList(attendanceRepository.findByStudentId(studentId));
+        return attendanceMapper.toResponseList(attendanceRepository.findByStudentId(parseUuid(studentId)));
     }
 
     public List<AttendanceResponse> getAttendancesByMeetingId(String meetingId) {
-        return attendanceMapper.toResponseList(attendanceRepository.findByMeetingId(meetingId));
+        return attendanceMapper.toResponseList(attendanceRepository.findByMeetingId(parseUuid(meetingId)));
     }
 
     public AttendanceResponse getAttendanceByStudentIdAndMeetingId(String studentId, String meetingId) {
-        Attendance attendance = attendanceRepository.findByStudentIdAndMeetingId(studentId, meetingId)
+        Attendance attendance = attendanceRepository.findByStudentIdAndMeetingId(parseUuid(studentId), parseUuid(meetingId))
             .orElseThrow(() -> new RuntimeException(
                 "Attendance not found for student id: " + studentId + " and meeting id: " + meetingId
             ));
@@ -52,7 +53,7 @@ public class AttendanceService {
     }
 
     public AttendanceResponse createAttendance(CreateAttendanceRequest request) {
-        attendanceRepository.findByStudentIdAndMeetingId(request.studentId(), request.meetingId())
+        attendanceRepository.findByStudentIdAndMeetingId(parseUuid(request.studentId()), parseUuid(request.meetingId()))
             .ifPresent(existingAttendance -> {
                 throw new RuntimeException(
                     "Attendance already exists for student id: " + request.studentId()
@@ -101,12 +102,16 @@ public class AttendanceService {
     }
 
     private Student getStudentById(String studentId) {
-        return studentRepository.findById(studentId)
+        return studentRepository.findById(parseUuid(studentId))
             .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
     }
 
     private Meeting getMeetingById(String meetingId) {
-        return meetingRepository.findById(meetingId)
+        return meetingRepository.findById(parseUuid(meetingId))
             .orElseThrow(() -> new RuntimeException("Meeting not found with id: " + meetingId));
+    }
+
+    private UUID parseUuid(String id) {
+        return UUID.fromString(id);
     }
 }

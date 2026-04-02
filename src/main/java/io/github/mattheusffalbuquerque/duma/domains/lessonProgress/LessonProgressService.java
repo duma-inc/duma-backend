@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.lessonProgress;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -38,11 +39,11 @@ public class LessonProgressService {
     }
 
     public List<LessonProgressResponse> getLessonProgressByStudentId(String studentId) {
-        return lessonProgressMapper.toResponseList(lessonProgressRepository.findByStudentId(studentId));
+        return lessonProgressMapper.toResponseList(lessonProgressRepository.findByStudentId(parseUuid(studentId)));
     }
 
     public List<LessonProgressResponse> getLessonProgressByLessonId(String lessonId) {
-        return lessonProgressMapper.toResponseList(lessonProgressRepository.findByLessonId(lessonId));
+        return lessonProgressMapper.toResponseList(lessonProgressRepository.findByLessonId(parseUuid(lessonId)));
     }
 
     public LessonProgressResponse createLessonProgress(CreateLessonProgressRequest request) {
@@ -95,18 +96,19 @@ public class LessonProgressService {
     }
 
     private Student getStudentById(String studentId) {
-        return studentRepository.findById(studentId)
+        return studentRepository.findById(parseUuid(studentId))
             .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
     }
 
     private Lesson getLessonById(String lessonId) {
-        return lessonRepository.findById(lessonId)
+        return lessonRepository.findById(parseUuid(lessonId))
             .orElseThrow(() -> new RuntimeException("Lesson not found with id: " + lessonId));
     }
 
     public ModuleProgressResponse countCompletedLessonsByStudentAndModule(String studentId, String moduleId) {
-        Integer completedLessons = lessonProgressRepository.countCompletedLessonsByStudentAndModule(studentId, moduleId);
-        Integer totalLessons = lessonRepository.countByModuleId(moduleId);
+        UUID parsedModuleId = parseUuid(moduleId);
+        Integer completedLessons = lessonProgressRepository.countCompletedLessonsByStudentAndModule(parseUuid(studentId), parsedModuleId);
+        Integer totalLessons = lessonRepository.countByModuleId(parsedModuleId);
 
         BigDecimal progressPercent = BigDecimal.ZERO;
         if (totalLessons != null && totalLessons > 0) {
@@ -140,6 +142,10 @@ public class LessonProgressService {
             progress.progressPercent(),
             progress.status()
         );
+    }
+
+    private UUID parseUuid(String id) {
+        return UUID.fromString(id);
     }
 
 }

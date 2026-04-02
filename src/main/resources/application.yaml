@@ -6,9 +6,9 @@ spring:
     username: duma
     password: 163duma
     driver-class-name: org.postgresql.Driver
-  mongodb:
-      uri: mongodb://duma:163duma@mongodb:27017/duma_db?authSource=admin
   data:
+    mongodb:
+      uri: mongodb://duma:163duma@mongodb:27017/duma_db?authSource=admin
     redis:
       host: redis
       port: 6379

@@ -3,13 +3,14 @@ package io.github.mattheusffalbuquerque.duma.domains.teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, String> {
+public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
 
-    Optional<Teacher> findByUserId(String userId);
+    Optional<Teacher> findByUserId(UUID userId);
 
-    void deleteByUserId(String userId);
+    void deleteByUserId(UUID userId);
 
     Integer countByIsActiveTrue();
 }

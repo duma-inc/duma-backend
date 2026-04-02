@@ -1,6 +1,7 @@
 package io.github.mattheusffalbuquerque.duma.domains.lesson;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class LessonService {
         return lessonMapper.toResponseList(lessons);
     }
 
-    public LessonResponse getLessonById(String id) {
+    public LessonResponse getLessonById(UUID id) {
         Lesson lesson = lessonRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Lesson not found with id: " + id));
         return lessonMapper.toResponse(lesson);
@@ -32,7 +33,7 @@ public class LessonService {
         return lessonMapper.toResponse(savedLesson);
     }
 
-    public LessonResponse updateLesson(String id, CreateLessonRequest request) {
+    public LessonResponse updateLesson(UUID id, CreateLessonRequest request) {
         Lesson existingLesson = lessonRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Lesson not found with id: " + id));
 
@@ -53,12 +54,12 @@ public class LessonService {
         return lessonMapper.toResponse(updatedLesson);
     }
 
-    public List<LessonResponse> getLessonsByModuleId(String moduleId) {
+    public List<LessonResponse> getLessonsByModuleId(UUID moduleId) {
         List<Lesson> lessons = lessonRepository.findByModuleId(moduleId);
         return lessonMapper.toResponseList(lessons);
     }
 
-    public void deleteLesson(String id) {
+    public void deleteLesson(UUID id) {
         Lesson existingLesson = lessonRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Lesson not found with id: " + id));
         lessonRepository.delete(existingLesson);

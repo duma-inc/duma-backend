@@ -16,6 +16,7 @@ import io.github.mattheusffalbuquerque.duma.domains.student.dto.CreateStudentReq
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import java.util.UUID;
 
 
 
@@ -36,7 +37,7 @@ public class StudentController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get student by ID", description = "Returns a single student by their unique ID")
-    public String getStudent(@PathVariable String id) {
+    public String getStudent(@PathVariable UUID id) {
         return studentMapper.toResponse(studentService.getStudentById(id)).toString();        
     }
     
@@ -48,13 +49,13 @@ public class StudentController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update a student", description = "Updates an existing student in the system")
-    public StudentResponse updateStudent(@PathVariable String id, @RequestBody CreateStudentRequest request) {
+    public StudentResponse updateStudent(@PathVariable UUID id, @RequestBody CreateStudentRequest request) {
         return studentMapper.toResponse(studentService.updateStudent(id, request));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a student", description = "Deletes an existing student from the system identified by their unique ID")
-    public void deleteStudent(@PathVariable String id) {
+    public void deleteStudent(@PathVariable UUID id) {
         studentService.deleteByUserId(id);
     }
 

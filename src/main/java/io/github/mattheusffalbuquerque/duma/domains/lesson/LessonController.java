@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import java.util.UUID;
 
 
 @RestController
@@ -36,7 +37,7 @@ public class LessonController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get lesson by ID", description = "Returns a single lesson by its unique ID")
-    public ResponseEntity<LessonResponse> getLessonById(@PathVariable String id) {
+    public ResponseEntity<LessonResponse> getLessonById(@PathVariable UUID id) {
         return ResponseEntity.ok(lessonService.getLessonById(id));
     }
 
@@ -48,13 +49,13 @@ public class LessonController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing lesson", description = "Updates the information of an existing lesson identified by its unique ID")
-    public ResponseEntity<LessonResponse> updateLesson(@PathVariable String id, @RequestBody CreateLessonRequest request) {
+    public ResponseEntity<LessonResponse> updateLesson(@PathVariable UUID id, @RequestBody CreateLessonRequest request) {
         return ResponseEntity.ok(lessonService.updateLesson(id, request));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete an existing lesson", description = "Deletes an existing lesson identified by its unique ID")
-    public ResponseEntity<Void> deleteLesson(@PathVariable String id) {
+    public ResponseEntity<Void> deleteLesson(@PathVariable UUID id) {
         lessonService.deleteLesson(id);
         return ResponseEntity.noContent().build();
     }
